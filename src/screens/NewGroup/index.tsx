@@ -22,16 +22,16 @@ export function NewGroup() {
   const playerInputRef = useRef<TextInput>(null)
 
   async function handleNewGroup() {
+    if (group.trim().length === 0) {
+      return Alert.alert('Novo grupo', 'Insira um nome para o grupo.')
+    }
+
     try {
       await groupCreate(group)
       navigation.navigate('players', { group })
     } catch (error) {
-      if (group.trim().length === 0) {
-        Alert.alert('Novo grupo', 'Insira um nome para o grupo.')
-      }
-
       if (error instanceof AppError) {
-        Alert.alert('Novo Grupo', error.message)
+        Alert.alert('Novo grupo', error.message)
       } else {
         Alert.alert('Novo groupo', 'Erro em criar novo groupo.')
         console.log(error)
@@ -39,10 +39,10 @@ export function NewGroup() {
     }
   }
 
-  useEffect(() => {
-    console.log('Iae pai')
-    playerInputRef.current?.focus()
-  }, [])
+  // useEffect(() => {
+  //   console.log('Iae pai')
+  //   playerInputRef.current?.focus()
+  // }, [])
 
   return (
     <Container>
